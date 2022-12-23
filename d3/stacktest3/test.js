@@ -1,5 +1,7 @@
 var colors = ['red', 'green', 'blue'];
 
+
+/* Make Data */
 var data = [
   { day: '2022-12-21', c: 120, cpp: 80, rs: 100 },
   { day: '2022-12-22', c: 130, cpp: 82, rs: 105 },
@@ -8,6 +10,7 @@ var data = [
   { day: '2022-12-25', c: 200, cpp: 240, rs: 150 }
 ];
 
+/* Date format to moment */
 for (let i = 0; i < data.length; i++) {
   let asMoment = moment(data[i].day);
   data[i].asMoment = asMoment;
@@ -17,15 +20,19 @@ for (let i = 0; i < data.length; i++) {
 
 console.log(data);
 
+/* Stack Data Generator */
 var stackGen = d3.stack()
   .keys(['c', 'cpp', 'rs']);
 
+/* Generate Data */
 var stackedSeries = stackGen(data);
 
+/* Scale */
 var xScale = d3.scaleTime()
   .domain(
     [
-      data[0].asMoment.clone().add(-6, 'hours'),
+      /* Give some margin */
+      data[0].asMoment.clone().add(-6, 'hours'), 
       data[4].asMoment.clone().add(6, 'hours')
     ]
   )
@@ -36,7 +43,8 @@ var yScale = d3.scaleLinear()
   .range([450, 50])
   .nice();
 
-let barwidth = 20;
+/* Draw Bars */
+let barWidth = 20;
 
 d3.select('.chart')
   .selectAll("g.bars")
@@ -53,7 +61,7 @@ d3.select('.chart')
   })
   .join('rect')
   .attr("x", function (d, i) {
-    return xScale(d.data.asMoment) - (barwidth / 2);
+    return xScale(d.data.asMoment) - (barWidth / 2);
   })
   .attr("y", function (d, i) {
     return yScale(d[1]);
@@ -62,9 +70,10 @@ d3.select('.chart')
     return yScale(d[0]) - yScale(d[1]);
   })
   .attr("width", function (d) {
-    return barwidth;
+    return barWidth;
   });
 
+/* Draw Axes */
 let useCustomFmt = 0;
 let xAxis;
 if (!useCustomFmt) {
