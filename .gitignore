@@ -1,0 +1,9 @@
+**
+!**/
+
+!*.c
+!*.ts
+!*.sh
+!*.py
+!*.html
+!*.gitignore

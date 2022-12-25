@@ -1,0 +1,16 @@
+<h1 id="mainText"></h1>
+
+<script>
+
+    let host = window.location.host;
+
+    document.getElementById("mainText").innerHTML = window.location.host;
+
+
+
+    fetch('dump.json')
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+
+
+</script>
