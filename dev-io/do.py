@@ -9,6 +9,23 @@ def add_work(work, context):
             work_list[ctx] = []
         work_list[ctx].append(work)
 
+        
+add_work("Meditate one second", 
+         ["Always"]) 
+add_work("Smile", 
+         ["Always"]) 
+
+add_work("Do relax", 
+         ["Always"]) 
+add_work("Do one squat", 
+         ["Home"])  
+add_work("Make bed", 
+         ["Home", "Housework"])
+
+add_work("Do stretch once", 
+         ["Home", "Work"])
+add_work("Fold one laundry", 
+         ["Home", "Housework", ]) 
 add_work("View chimhaha", 
          ["Home", "Transit"]) 
 add_work("Lie down to bed", 
@@ -53,10 +70,8 @@ add_work("Write one line of novel",
          ["Home", "Transit", ])
 add_work("Write one line of code",
          ["Home", ])
-
 add_work("Turn on hot water at shower room",
          ["Home", ])
-
 add_work("Write one line of comment",
          ["Home", "Transit", ])
 add_work("Draw one stroke",
@@ -65,7 +80,6 @@ add_work("Turn on japanese vocabulary app",
          ["Home", "Transit", ])
 add_work("Check git readlist", 
          ["Home", "Transit", ])
-
 add_work("Check git readlist",  
          ["Home", "Transit", ])
 add_work("Update random readme.md", 
