@@ -1,36 +1,128 @@
-
 import json
 
-dict = {'list': [
-    
-# Playlists
-    "Lie down to bed",
-    "Turn on the music",
-    "Turn on Starcraft to beat commputer",
-    "Turn on novel viewer",
-    
-# List checker
-    "Look at the checklist that you should do right now",
+work_list = {}
 
-# Houseworks
-    "Pick up one trash and throw to trash bin",
-    "Get one piece of watered tissue and rub something",
+def add_work(work, context):
+    for ctx in context:
+        print(f'ctx {ctx} work {work}')
+        if ctx not in work_list:
+            work_list[ctx] = []
+        work_list[ctx].append(work)
 
-# Programmings
-    "Look one github issues",
-    "Write one line of novel",
-    "Write one line of code",
-    "Write one line of comment",
 
-# Drawing
-    "Draw one stroke",
+keywords = ["Home", "Transit", "Talk"]
 
-# Study
-    "Turn on japanese vocabulary app"
+add_work("View chimhaha", 
+         ["Home", "Transit"]) 
+add_work("Lie down to bed", 
+         ["Home", ]) 
+add_work("Turn on the music", 
+         ["Home", "Transit"])
+add_work("Lie down to bed", 
+         ["Home"])
+add_work("Throw out garbage outside", 
+         ["Home", "Housework", ])
+add_work("Turn on Starcraft to beat computer", 
+         ["Home"])
+add_work("Turn on novel viewer", 
+         ["Home", "Transit", ])
+add_work("Look at the checklist that you should do right now", 
+         ["Home", "Transit", ])
+add_work("Pick up one trash and throw to trash bin", 
+         ["Home", "Housework", ])
+add_work("Get one piece of watered tissue and rub something", 
+         ["Home", "Housework", ])
+add_work("Pick one laundry and put in washer", 
+         ["Home", "Housework", ])
+add_work("View thinktree", 
+         ["Home", "Transit", ])
+add_work("Clean toilet", 
+         ["Home", "Housework", ])
+add_work("Put one thing back where it was", 
+         ["Home", "Housework", ])
+add_work("Turn on the hot water in the sink", 
+         ["Home", "Housework", ])
+add_work("Put one food garbage to trashbag", 
+         ["Home", "Housework", ])
+add_work("Throw out one big garbage", 
+         ["Home", "Housework", ])
+add_work("Pick Vaccum Cleaner", 
+         ["Home", "Housework", ])
+add_work("Charge a phone", 
+         ["Home", ])
+add_work("Look one github issues", 
+         ["Home", "Transit", ])
+add_work("Write one line of novel", 
+         ["Home", "Transit", ])
+add_work("Write one line of code",
+         ["Home", ])
 
-]
+add_work("Turn on hot water at shower room",
+         ["Home", ])
+
+add_work("Write one line of comment",
+         ["Home", "Transit", ])
+add_work("Draw one stroke",
+         ["Home", ])
+add_work("Turn on japanese vocabulary app", 
+         ["Home", "Transit", ])
+add_work("Check git readlist", 
+         ["Home", "Transit", ])
+
+add_work("Check git readlist",  
+         ["Home", "Transit", ])
+add_work("Update random readme.md", 
+         ["Home", "Transit", ])
+add_work("Make some small message to somebody", 
+         ["Home", "Transit", ])
+
+add_work("Talk about weather",  
+         ["talk"])
+add_work("Talk about news", 
+         ["talk"])
+add_work("Talk about work", 
+         ["talk"])
+
+
+print(work_list)
+
+for k, v in work_list.items():
+    print(f'key {k} val {v}')
+    with open(f"static/{k}.json", "w") as f:
+        f.write(json.dumps(v, indent=4))
+
+
+"""
+######################
+#       TRANSIT      #
+######################
+transit_list = {
+    'list' : [
+        "Check git readlist",
+        "Update random readme.md",
+        "Make some small message to somebody"
+    ]
 }
 
-json_dump = json.dumps(dict, indent=4)
-with open("dump.json", "w") as f:
-    f.write(json_dump)
+######################
+#        TALK        #
+######################
+talk_list = {
+    'list' : [
+        "Weather",
+        "News",
+        "Work"
+    ]
+}
+
+
+with open("static/home.json", "w") as f:
+    f.write(json.dumps(home_list, indent=4))
+
+with open("static/transit.json", "w") as f:
+    f.write(json.dumps(transit_list, indent=4))
+    
+with open("static/talk.json", "w") as f:
+    f.write(json.dumps(transit_list, indent=4))
+
+"""
