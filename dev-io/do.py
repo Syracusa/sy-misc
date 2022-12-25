@@ -10,7 +10,7 @@ dict = {'list': [
     "Turn on novel viewer",
     
 # List checker
-    "Look checklist that you should do right now",
+    "Look at the checklist that you should do right now",
 
 # Houseworks
     "Pick up one trash and throw to trash bin",
