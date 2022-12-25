@@ -9,9 +9,6 @@ def add_work(work, context):
             work_list[ctx] = []
         work_list[ctx].append(work)
 
-
-keywords = ["Home", "Transit", "Talk"]
-
 add_work("View chimhaha", 
          ["Home", "Transit"]) 
 add_work("Lie down to bed", 
@@ -77,11 +74,11 @@ add_work("Make some small message to somebody",
          ["Home", "Transit", ])
 
 add_work("Talk about weather",  
-         ["talk"])
+         ["Talk"])
 add_work("Talk about news", 
-         ["talk"])
+         ["Talk"])
 add_work("Talk about work", 
-         ["talk"])
+         ["Talk"])
 
 
 print(work_list)
@@ -90,39 +87,3 @@ for k, v in work_list.items():
     print(f'key {k} val {v}')
     with open(f"static/{k}.json", "w") as f:
         f.write(json.dumps(v, indent=4))
-
-
-"""
-######################
-#       TRANSIT      #
-######################
-transit_list = {
-    'list' : [
-        "Check git readlist",
-        "Update random readme.md",
-        "Make some small message to somebody"
-    ]
-}
-
-######################
-#        TALK        #
-######################
-talk_list = {
-    'list' : [
-        "Weather",
-        "News",
-        "Work"
-    ]
-}
-
-
-with open("static/home.json", "w") as f:
-    f.write(json.dumps(home_list, indent=4))
-
-with open("static/transit.json", "w") as f:
-    f.write(json.dumps(transit_list, indent=4))
-    
-with open("static/talk.json", "w") as f:
-    f.write(json.dumps(transit_list, indent=4))
-
-"""
