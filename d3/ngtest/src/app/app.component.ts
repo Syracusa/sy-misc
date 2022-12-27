@@ -41,7 +41,6 @@ export class AppComponent {
 
     var colors = ['red', 'green', 'blue'];
 
-
     /* Stack Data Generator */
     var stackGen = d3.stack()
       .keys(['c', 'cpp', 'rs']);
@@ -95,7 +94,6 @@ export class AppComponent {
         return barWidth;
       });
 
-
     /* Draw Axes */
     let useCustomFmt = 0;
     let xAxis;
@@ -112,11 +110,13 @@ export class AppComponent {
     let yAxis = d3.axisRight(yScale);
 
     d3.select('.xaxis')
-      .call(xAxis.call)
+      .append("g")
+      .call(xAxis)
       .attr("transform", "translate(" + 0 + ", " + 450 + ")");
 
     d3.select('.yaxis')
-      .call(yAxis.call)
+      .append("g")
+      .call(yAxis)
       .attr("transform", "translate(" + 600 + ", " + 0 + ")");
 
   }
