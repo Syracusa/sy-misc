@@ -7,3 +7,5 @@
 !*.py
 !*.html
 !*.gitignore
+
+!d3/ngtest/src/assets/*.json

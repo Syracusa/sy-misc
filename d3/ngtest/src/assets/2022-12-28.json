@@ -1,0 +1,88 @@
+{
+    "All": {
+        ".c": 2000,
+        ".h": 500,
+        ".cpp": 702,
+        ".ts": 737,
+        ".js": 915,
+        ".html": 359,
+        ".py": 1721,
+        ".sh": 464,
+        ".rs": 139,
+        ".md": 1280,
+        ".cs": 186
+    },
+    "CodingTest": {
+        ".py": 518
+    },
+    "sy-msg-window": {
+        ".c": 1379,
+        ".h": 162,
+        ".py": 701,
+        ".rs": 3,
+        ".md": 6
+    },
+    "sy-rust-boilerplate": {
+        ".rs": 136,
+        ".md": 1
+    },
+    "source-graph": {
+        ".js": 722,
+        ".html": 82,
+        ".py": 218,
+        ".sh": 197,
+        ".md": 3
+    },
+    "sy-technotes": {
+        ".md": 1054
+    },
+    "bbb-dd-examples": {
+        ".c": 544,
+        ".h": 23,
+        ".sh": 12,
+        ".md": 27
+    },
+    "linux-c-boilerplate": {
+        ".c": 558,
+        ".h": 482,
+        ".sh": 9,
+        ".md": 45
+    },
+    "my-openssl-examples": {
+        ".c": 1057,
+        ".h": 60,
+        ".sh": 242,
+        ".md": 24
+    },
+    "sy-misc": {
+        ".c": 7,
+        ".ts": 281,
+        ".js": 193,
+        ".html": 214,
+        ".py": 103,
+        ".sh": 4,
+        ".md": 27
+    },
+    "VolatileTextEditor": {
+        ".md": 3,
+        ".cs": 186
+    },
+    "time-wheel": {
+        ".c": 221,
+        ".h": 129,
+        ".md": 34
+    },
+    "sy_cpp_boilerplate": {
+        ".h": 197,
+        ".cpp": 702,
+        ".md": 29
+    },
+    "pywebsock-boilerplate": {
+        ".py": 181
+    },
+    "sy-angular-boilerplate": {
+        ".ts": 456,
+        ".html": 63,
+        ".md": 27
+    }
+}
