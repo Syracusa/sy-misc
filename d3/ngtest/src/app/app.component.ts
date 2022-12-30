@@ -6,7 +6,6 @@ import DataInfo from '../assets/datainfo.json';
 
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { color, NumberArray } from 'd3';
 
 @Component({
   selector: 'app-root',
@@ -22,9 +21,8 @@ export class AppComponent {
   VERBOSE = 0;
 
   ngOnInit(): void {
-    console.log('ngoninit!!');
-
-    console.log(DataInfo);
+    if (this.VERBOSE)
+      console.log(DataInfo);
 
     this.datasize = DataInfo['files'].length
     for (let i = 0; i < this.datasize; i++) {
@@ -36,22 +34,14 @@ export class AppComponent {
         }
 
         this.data.push(data['All']);
-
-        /* Check missing data */
-        for (let eidx = 0; eidx < DataInfo['extensions'].length; eidx++) {
-          let ext = DataInfo['extensions'][eidx];
-          if (!(ext in data['All'])) {
-            data['All'][ext] = 0;
-          }
-        }
-
         this.asMoment.push(moment(DataInfo['files'][i].split('.')[0]));
         this.readDone += 1;
 
         if (this.readDone == this.datasize) {
           console.log(this.data);
           console.log(this.asMoment);
-          this.drawGraph("area");
+          this.drawGraph("#chart1", "area");
+          this.drawGraph("#chart2", "bar");
         }
       });
     }
@@ -64,6 +54,7 @@ export class AppComponent {
   }
 
   drawBarChart(
+    selector: string,
     stackdata: d3.Series<{ [key: string]: number; }, string>[],
     xScale: any,
     yScale: any): void {
@@ -73,7 +64,7 @@ export class AppComponent {
     /* Draw Bars */
     let barWidth = 20;
 
-    d3.select('.chart')
+    d3.select(selector)
       .selectAll("g.bars")
       .data(stackdata)
       .enter()
@@ -102,12 +93,10 @@ export class AppComponent {
   }
 
   drawAreaChart(
+    selector: string,
     stackdata: d3.Series<{ [key: string]: number; }, string>[],
     xScale: d3.ScaleTime<number, number, never>,
     yScale: d3.ScaleLinear<number, number, never>): void {
-
-    console.log("Test");
-    console.log(stackdata);
 
     let newdata: Array<[number, number]>[] = [];
 
@@ -126,7 +115,7 @@ export class AppComponent {
       .y0((d, i) => yScale(d[0]))
       .y1((d, i) => yScale(d[1]));
 
-    d3.select('.chart')
+    d3.select(selector)
       .selectAll("path")
       .data(newdata)
       .join("path")
@@ -134,7 +123,7 @@ export class AppComponent {
       .attr("d", (d, i) => areaGen(d));
   }
 
-  drawGraph(kind: string): void {
+  drawGraph(selector: string, kind: string): void {
     /* Stack Data Generator */
     var stackGen = d3.stack()
       .keys(DataInfo.extensions);
@@ -163,9 +152,9 @@ export class AppComponent {
       .nice();
 
     if (kind == "bar") {
-      this.drawBarChart(stackedSeries, xScale, yScale);
+      this.drawBarChart(selector, stackedSeries, xScale, yScale);
     } else {
-      this.drawAreaChart(stackedSeries, xScale, yScale);
+      this.drawAreaChart(selector, stackedSeries, xScale, yScale);
     }
 
     /* Draw Axes */
@@ -183,12 +172,12 @@ export class AppComponent {
 
     let yAxis = d3.axisRight(yScale);
 
-    d3.select('.xaxis')
+    d3.select(selector)
       .append("g")
       .call(xAxis)
       .attr("transform", "translate(" + 0 + ", " + 450 + ")");
 
-    d3.select('.yaxis')
+    d3.select(selector)
       .append("g")
       .call(yAxis)
       .attr("transform", "translate(" + 600 + ", " + 0 + ")");
