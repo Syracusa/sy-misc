@@ -1,0 +1,67 @@
+{
+    "All": {
+        ".c": 1872,
+        ".h": 876,
+        ".cpp": 702,
+        ".ts": 912,
+        ".html": 126,
+        ".py": 274,
+        ".sh": 253,
+        ".rs": 48,
+        ".md": 1272
+    },
+    "__loc-counter": {
+        ".ts": 456,
+        ".html": 63,
+        ".py": 93,
+        ".sh": 1,
+        ".md": 2
+    },
+    "public-memo": {
+        ".md": 206
+    },
+    "linux-c-boilerplate": {
+        ".c": 574,
+        ".h": 482,
+        ".sh": 9,
+        ".md": 45
+    },
+    "sy-techtips": {
+        ".md": 905
+    },
+    "simple-c-boilerplate": {
+        ".c": 12,
+        ".h": 6
+    },
+    "openssl-examples": {
+        ".c": 1057,
+        ".h": 60,
+        ".sh": 242,
+        ".md": 24
+    },
+    "sy-misc": {
+        ".c": 7,
+        ".sh": 1
+    },
+    "rust-boilerplate": {
+        ".rs": 48
+    },
+    "time-wheel": {
+        ".c": 222,
+        ".h": 131,
+        ".md": 34
+    },
+    "sy_cpp_boilerplate": {
+        ".h": 197,
+        ".cpp": 702,
+        ".md": 29
+    },
+    "pywebsock-boilerplate": {
+        ".py": 181
+    },
+    "sy-angular-boilerplate": {
+        ".ts": 456,
+        ".html": 63,
+        ".md": 27
+    }
+}
