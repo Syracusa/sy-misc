@@ -20,6 +20,16 @@ add_work("Smile hard",
          ["Always"]) 
 add_work("Do relax", 
          ["Always"]) 
+add_work("Think about howto automate myself", 
+         ["Always"])
+add_work("Take a deep breath", 
+         ["Always"])
+add_work("Do daydream", 
+         ["Always"])
+
+add_work("Drink something", 
+         ["Home", "Work"])
+
 add_work("Do one squat", 
          ["Home"])  
 add_work("Do flank one second", 
@@ -32,7 +42,6 @@ add_work("Do stretch once",
          ["Home", "Work"])
 add_work("Look at the checklist that you should do right now", 
          ["Home", "Transit", ])
-
 
 # Programming
 add_work("Look one github issues", 
@@ -69,6 +78,8 @@ add_work("Pick pencil",
          ["Home", ])
 
 # Housework
+add_work("Check random storage of your room", 
+         ["Home", "Housework"])
 add_work("Make bed", 
          ["Home", "Housework"])
 add_work("Fold one laundry", 
@@ -92,6 +103,8 @@ add_work("Put one food garbage to trashbag",
 add_work("Throw out one big garbage", 
          ["Home", "Housework", ])
 add_work("Pick Vaccum Cleaner", 
+         ["Home", "Housework", ])
+add_work("Put on one sock", 
          ["Home", "Housework", ])
 
 # Think
