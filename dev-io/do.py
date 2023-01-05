@@ -26,6 +26,8 @@ add_work("Take a deep breath",
          ["Always"])
 add_work("Do daydream", 
          ["Always"])
+add_work("Buy one stock", 
+         ["Always"])
 
 add_work("Drink something", 
          ["Home", "Work"])
