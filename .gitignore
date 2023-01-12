@@ -2,10 +2,12 @@
 !**/
 
 !*.c
+!*.h
 !*.ts
 !*.sh
 !*.py
 !*.html
 !*.gitignore
+!CMakeLists.txt
 
 !d3/ngtest/src/assets/*.json
