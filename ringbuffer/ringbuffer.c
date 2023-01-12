@@ -67,8 +67,6 @@ ssize_t RingBuffer_push(RingBuffer* ringbuf, void* data, int len)
         return PIUTIL_BUFFER_FULL;
     }
 
-    // fprintf(stderr, "head : %lu tail : %lu\n", ringbuf->head, ringbuf->tail);
-
     int cont_remain = ringbuf->max_offset - ringbuf->tail + 1;
     if (cont_remain < len)
     {
@@ -80,25 +78,16 @@ ssize_t RingBuffer_push(RingBuffer* ringbuf, void* data, int len)
         RB_VERBOSE("Push success... head %lu tail %lu\n",
                        ringbuf->head, ringbuf->tail);
 
-        // for (int bidx = 0; bidx <= ringbuf->max_offset; bidx++)
-        //     RB_VERBOSE(" %x ", ringbuf->buf[bidx]);
-        // RB_VERBOSE("\n");
 
         return len; /* Done */
     }
 
-
-    // fprintf(stderr, "tail : %lu len : %d\n", ringbuf->tail, len);
     memcpy(&(ringbuf->buf[ringbuf->tail]), data, len);
     ringbuf->tail += len;
     ringbuf->tail %= ringbuf->max_offset + 1;
 
     RB_VERBOSE("Push success... head %lu tail %lu\n",
                    ringbuf->head, ringbuf->tail);
-    // for (int bidx = 0; bidx <= ringbuf->max_offset; bidx++)
-    //     RB_VERBOSE(" %x ", ringbuf->buf[bidx]);
-    // RB_VERBOSE("\n");
-
     return len;
 }
 
@@ -136,7 +125,6 @@ static ssize_t RingBuffer_read_internal(RingBuffer* ringbuf,
         return readlen; /* Done */
     }
     
-
     memcpy(buf, &(ringbuf->buf[ringbuf->head]), readlen);
     if (do_pop)
     {
