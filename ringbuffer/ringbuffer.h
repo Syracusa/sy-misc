@@ -1,5 +1,5 @@
-#ifndef PI_UTIL_H
-#define PI_UTIL_H
+#ifndef RINGBUFFER_H
+#define RINGBUFFER_H
 
 #include <stdio.h>
 #include <stdint.h>
