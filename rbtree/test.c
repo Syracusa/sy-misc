@@ -6,10 +6,10 @@
 #include "rbtree.h"
 
 
-static void inject_random(RbtCtx* ctx, int maxval)
+static void inject_random(RbtCtx* ctx, RbtKey maxval)
 {
-    int key = rand() % maxval;
-    fprintf(stderr, "Insert key %d\n", key);
+    RbtKey key = rand() % maxval;
+    fprintf(stderr, "Insert key %lu\n", key);
     rbt_insert(ctx, key, NULL);
 }
 

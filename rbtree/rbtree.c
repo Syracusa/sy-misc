@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h> /* memset */
@@ -31,7 +30,7 @@ static void iovec_tree_print(char **iovec, RbtElem *elem, int depth, int startpo
         return;
     }
     char tmp[100];
-    sprintf(tmp, "%d", elem->key);
+    sprintf(tmp, "%s%lu", elem->color == 0 ? "R-" : "B-", elem->key);
 
     int prtpos = centerpos;
     
@@ -66,6 +65,57 @@ void rbt_print(RbtCtx *ctx, int col)
     FREE_IOVEC;
 }
 
+static void rbt_balancing(RbtCtx *ctx, RbtElem *node)
+{
+    RbtElem *parent = node->parent;
+    if (parent == NULL)
+        return; /* Root Node */
+    
+    fprintf(stderr, "Parent color : %u\n", node->color);
+
+    if (parent->color == 0) {
+        /* Parent is Red */
+
+        RbtElem *grandparent = node->parent->parent;
+        if (grandparent) {
+            RbtElem *uncle;
+            if (grandparent->child[0] == parent)
+                uncle = grandparent->child[1];
+            else 
+                uncle = grandparent->child[0];
+
+            if (uncle){
+                if (uncle->color == 0) {
+                    /* Uncle is Red */
+                    uncle->color = 1;
+                    parent->color = 1;
+                    grandparent->color = 0;
+                    rbt_balancing(ctx, grandparent);
+                    return;
+                }
+            }
+
+            /* Uncle is Black or not exist */
+            if (0 /* Check if node is in inner position */){
+                /* Make node to outter position */
+            } 
+
+            /* Node is in outter position */
+            /* TBD */
+            return;
+        } else {
+            /* No grandparent exist.. */
+            parent->color = 1;
+            return;
+        }
+        
+    } else {
+        /* Parent is black. No need to process */
+        
+        return;
+    }
+}
+
 static void __rbt_insert(RbtCtx *ctx,
                          RbtElem **partial_tree,
                          RbtElem *node,
@@ -75,6 +125,7 @@ static void __rbt_insert(RbtCtx *ctx,
 
     if (*partial_tree == NULL) {
         *partial_tree = node;
+        rbt_balancing(ctx, node);
 
         if (ctx->depth < depth) {
             ctx->depth = depth;
@@ -84,17 +135,19 @@ static void __rbt_insert(RbtCtx *ctx,
     }
 
     if ((*partial_tree)->key == node->key) {
-        fprintf(stderr, "Key collision occured. key:%d\n", node->key);
+        fprintf(stderr, "Key collision occured. key:%lu\n", node->key);
         free(node);
         return;
     } else if ((**partial_tree).key > node->key) {
+        node->parent = (RbtElem *)(*partial_tree);
         __rbt_insert(ctx, (RbtElem **)&((*partial_tree)->child[0]), node, depth);
     } else {
+        node->parent = (RbtElem *)(*partial_tree);
         __rbt_insert(ctx, (RbtElem **)&((*partial_tree)->child[1]), node, depth);
     }
 }
 
-void rbt_insert(RbtCtx *ctx, int key, void *data)
+void rbt_insert(RbtCtx *ctx, RbtKey key, void *data)
 {
     RbtElem *elem = malloc(sizeof(RbtElem));
     memset(elem, 0x00, sizeof(RbtElem));
@@ -105,12 +158,12 @@ void rbt_insert(RbtCtx *ctx, int key, void *data)
     __rbt_insert(ctx, &ctx->root, elem, 0);
 }
 
-void rbt_delete(RbtCtx *ctx, int key)
+void rbt_delete(RbtCtx *ctx, RbtKey key)
 {
     /* TODO */
 }
 
-void *rbt_get(RbtCtx *ctx, int key)
+void *rbt_get(RbtCtx *ctx, RbtKey key)
 {
     /* TODO */
     return NULL;
