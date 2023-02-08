@@ -96,34 +96,53 @@ static void rbt_balancing(RbtCtx *ctx, RbtElem *node)
             }
 
             /* Uncle is Black or not exist */
-
             int dir = (parent->child[0] == node) ? 0 : 1;
             int parent_dir = (grandparent->child[0] == parent) ? 0: 1;
             int is_outer_node = (dir != parent_dir) ? 0 : 1;
 
             if (!is_outer_node) {
-                /* Make node to outter position */
+                /* Make parent node to outter position and be parent of parent */
+                RbtElem* inner_son = node->child[1 - dir];
                 
-                /*
-                    if node is left
-                    parent -> node's left child
-                    node -> grandparent's left child
-                    
-                */
+                parent->parent = node;
+                node->child[1 - dir] = parent;
+
+                inner_son->parent = parent;
+                parent->child[dir] = inner_son; 
+            
+                node->parent = grandparent;
+                grandparent->child[1 - dir] = node;
+                rbt_balancing(ctx, parent);
+                return;
             }
 
             /* Node is in outter position */
-            /* TBD */
+            RbtElem* sibling = parent->child[1 - dir];
+            
+            parent->child[1 - dir] = grandparent;
+            grandparent->parent = parent;
+
+            grandparent->child[dir] = sibling;
+            sibling->parent = grandparent;
+            
+            RbtElem* superparent = grandparent->parent;
+            if (superparent){
+                int spdir = (grandparent == superparent->child[0]) ? 0 : 1;
+                superparent->child[spdir] = parent;
+                parent->parent = superparent;
+            }
+
+            grandparent->color = 0;
+            parent->color = 1;
             return;
         } else {
             /* No grandparent exist.. */
             parent->color = 1;
             return;
         }
-
     } else {
         /* Parent is black. No need to process */
-
+        
         return;
     }
 }
