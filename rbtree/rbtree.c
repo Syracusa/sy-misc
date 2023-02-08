@@ -96,6 +96,12 @@ static void rbt_balancing(RbtCtx *ctx, RbtElem *node)
             }
 
             /* Uncle is Black or not exist */
+
+            /* if p->child[0] == node and g->child[0] == p then outer */
+            /* if p->child[1] == node and g->child[1] == p then outer */
+            /* if p->child[1] == node and g->child[0] == p then inner */
+            /* if p->child[0] == node and g->child[1] == p then inner */
+
             if (0 /* Check if node is in inner position */){
                 /* Make node to outter position */
             } 
