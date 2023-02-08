@@ -25,7 +25,7 @@ free(iovec);\
 static void iovec_tree_print(char **iovec, RbtElem *elem, int depth, int startpos, int endpos)
 {
     int centerpos = (startpos + endpos) / 2;
-    if (elem == NULL){
+    if (elem == NULL) {
         iovec[depth][centerpos] = '*';
         return;
     }
@@ -33,7 +33,7 @@ static void iovec_tree_print(char **iovec, RbtElem *elem, int depth, int startpo
     sprintf(tmp, "%s%lu", elem->color == 0 ? "R-" : "B-", elem->key);
 
     int prtpos = centerpos;
-    
+
     int availlen = endpos - startpos + 1;
     if (availlen < strlen(tmp)) {
         memset(&iovec[depth][startpos], '!', availlen);
@@ -70,7 +70,7 @@ static void rbt_balancing(RbtCtx *ctx, RbtElem *node)
     RbtElem *parent = node->parent;
     if (parent == NULL)
         return; /* Root Node */
-    
+
     fprintf(stderr, "Parent color : %u\n", node->color);
 
     if (parent->color == 0) {
@@ -81,10 +81,10 @@ static void rbt_balancing(RbtCtx *ctx, RbtElem *node)
             RbtElem *uncle;
             if (grandparent->child[0] == parent)
                 uncle = grandparent->child[1];
-            else 
+            else
                 uncle = grandparent->child[0];
 
-            if (uncle){
+            if (uncle) {
                 if (uncle->color == 0) {
                     /* Uncle is Red */
                     uncle->color = 1;
@@ -97,14 +97,20 @@ static void rbt_balancing(RbtCtx *ctx, RbtElem *node)
 
             /* Uncle is Black or not exist */
 
-            /* if p->child[0] == node and g->child[0] == p then outer */
-            /* if p->child[1] == node and g->child[1] == p then outer */
-            /* if p->child[1] == node and g->child[0] == p then inner */
-            /* if p->child[0] == node and g->child[1] == p then inner */
+            int dir = (parent->child[0] == node) ? 0 : 1;
+            int parent_dir = (grandparent->child[0] == parent) ? 0: 1;
+            int is_outer_node = (dir != parent_dir) ? 0 : 1;
 
-            if (0 /* Check if node is in inner position */){
+            if (!is_outer_node) {
                 /* Make node to outter position */
-            } 
+                
+                /*
+                    if node is left
+                    parent -> node's left child
+                    node -> grandparent's left child
+                    
+                */
+            }
 
             /* Node is in outter position */
             /* TBD */
@@ -114,10 +120,10 @@ static void rbt_balancing(RbtCtx *ctx, RbtElem *node)
             parent->color = 1;
             return;
         }
-        
+
     } else {
         /* Parent is black. No need to process */
-        
+
         return;
     }
 }
@@ -182,14 +188,14 @@ RbtCtx *rbt_new()
     return newctx;
 }
 
-static void free_elem(RbtElem* elem)
+static void free_elem(RbtElem *elem)
 {
     if (elem->child[0] != NULL)
         free_elem(elem->child[0]);
 
     if (elem->child[1] != NULL)
         free_elem(elem->child[1]);
-    
+
     free(elem);
 }
 
