@@ -101,19 +101,19 @@ static void rbt_balancing(RbtCtx *ctx, RbtElem *node)
 
             /* Uncle is Black or not exist */
             int dir = (parent->child[0] == node) ? 0 : 1;
-            int parent_dir = (grandparent->child[0] == parent) ? 0: 1;
+            int parent_dir = (grandparent->child[0] == parent) ? 0 : 1;
             int is_outer_node = (dir != parent_dir) ? 0 : 1;
 
             if (!is_outer_node) {
                 /* Make parent node to outter position and be parent of parent */
-                RbtElem* inner_son = node->child[1 - dir];
-                
+                RbtElem *inner_son = node->child[1 - dir];
+
                 parent->parent = node;
                 node->child[1 - dir] = parent;
 
-                if (inner_son){
+                if (inner_son) {
                     inner_son->parent = parent;
-                    parent->child[dir] = inner_son; 
+                    parent->child[dir] = inner_son;
                 } else {
                     parent->child[dir] = NULL;
                 }
@@ -126,20 +126,20 @@ static void rbt_balancing(RbtCtx *ctx, RbtElem *node)
             }
 
             /* Node is in outter position */
-            RbtElem* sibling = parent->child[1 - dir];
-            RbtElem* superparent = grandparent->parent;
+            RbtElem *sibling = parent->child[1 - dir];
+            RbtElem *superparent = grandparent->parent;
 
             parent->child[1 - dir] = grandparent;
             grandparent->parent = parent;
 
-            if (sibling){
+            if (sibling) {
                 grandparent->child[dir] = sibling;
                 sibling->parent = grandparent;
             } else {
                 grandparent->child[dir] = NULL;
             }
 
-            if (superparent){
+            if (superparent) {
                 int spdir = (grandparent == superparent->child[0]) ? 0 : 1;
                 superparent->child[spdir] = parent;
                 parent->parent = superparent;
@@ -160,7 +160,7 @@ static void rbt_balancing(RbtCtx *ctx, RbtElem *node)
         }
     } else {
         /* Parent is black. No need to process */
-            fprintf(stderr, "Parent is black. No need to process\n");
+        fprintf(stderr, "Parent is black. No need to process\n");
         return;
     }
 }
@@ -209,13 +209,33 @@ void rbt_insert(RbtCtx *ctx, RbtKey key, void *data)
 
 void rbt_delete(RbtCtx *ctx, RbtKey key)
 {
+    RbtElem *elem = rbt_get(ctx, key);
+
+    if (elem == NULL)
+        return;
+
     /* TODO */
+
+
 }
 
-void *rbt_get(RbtCtx *ctx, RbtKey key)
+static RbtElem *__rbt_get(RbtElem *elem, RbtKey key)
 {
-    /* TODO */
-    return NULL;
+    if (elem == NULL)
+        return NULL;
+
+    if (elem->key == key){
+        return elem;
+    } else if (elem->key > key){
+        return __rbt_get(elem->child[0], key);
+    } else {
+        return __rbt_get(elem->child[1], key);
+    }
+}
+
+RbtElem *rbt_get(RbtCtx *ctx, RbtKey key)
+{
+    return __rbt_get(ctx->root, key);
 }
 
 RbtCtx *rbt_new()
