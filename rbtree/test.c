@@ -19,6 +19,7 @@ int main(){
     RbtCtx* ctx = rbt_new();
     for (int i = 0; i < 10; i++) {
         inject_random(ctx, 1000);
+        rbt_print(ctx, 120);
     }
 
     rbt_print(ctx, 120);

@@ -24,6 +24,9 @@ free(iovec);\
 
 static void iovec_tree_print(char **iovec, RbtElem *elem, int depth, int startpos, int endpos)
 {
+    if (endpos < startpos)
+        return;
+
     int centerpos = (startpos + endpos) / 2;
     if (elem == NULL) {
         iovec[depth][centerpos] = '*';
@@ -35,8 +38,8 @@ static void iovec_tree_print(char **iovec, RbtElem *elem, int depth, int startpo
     int prtpos = centerpos;
 
     int availlen = endpos - startpos + 1;
-    if (availlen < strlen(tmp)) {
-        memset(&iovec[depth][startpos], '!', availlen);
+    if (availlen < strlen(tmp) + 1) {
+        memset(&iovec[depth][startpos], '!', 1);
         return;
     }
 
@@ -71,7 +74,7 @@ static void rbt_balancing(RbtCtx *ctx, RbtElem *node)
     if (parent == NULL)
         return; /* Root Node */
 
-    fprintf(stderr, "Parent color : %u\n", node->color);
+    fprintf(stderr, "Try balancing... Parent color : %u\n", node->color);
 
     if (parent->color == 0) {
         /* Parent is Red */
@@ -90,6 +93,7 @@ static void rbt_balancing(RbtCtx *ctx, RbtElem *node)
                     uncle->color = 1;
                     parent->color = 1;
                     grandparent->color = 0;
+                    fprintf(stderr, "Make Parent and Uncle to Black\n");
                     rbt_balancing(ctx, grandparent);
                     return;
                 }
@@ -107,42 +111,56 @@ static void rbt_balancing(RbtCtx *ctx, RbtElem *node)
                 parent->parent = node;
                 node->child[1 - dir] = parent;
 
-                inner_son->parent = parent;
-                parent->child[dir] = inner_son; 
-            
+                if (inner_son){
+                    inner_son->parent = parent;
+                    parent->child[dir] = inner_son; 
+                } else {
+                    parent->child[dir] = NULL;
+                }
+
                 node->parent = grandparent;
                 grandparent->child[1 - dir] = node;
+                printf("Inner to Outer Done\n");
                 rbt_balancing(ctx, parent);
                 return;
             }
 
             /* Node is in outter position */
             RbtElem* sibling = parent->child[1 - dir];
-            
+            RbtElem* superparent = grandparent->parent;
+
             parent->child[1 - dir] = grandparent;
             grandparent->parent = parent;
 
-            grandparent->child[dir] = sibling;
-            sibling->parent = grandparent;
-            
-            RbtElem* superparent = grandparent->parent;
+            if (sibling){
+                grandparent->child[dir] = sibling;
+                sibling->parent = grandparent;
+            } else {
+                grandparent->child[dir] = NULL;
+            }
+
             if (superparent){
                 int spdir = (grandparent == superparent->child[0]) ? 0 : 1;
                 superparent->child[spdir] = parent;
                 parent->parent = superparent;
+            } else {
+                parent->parent = NULL;
+                ctx->root = parent;
             }
 
             grandparent->color = 0;
             parent->color = 1;
+            printf("Outer balancing done\n");
             return;
         } else {
             /* No grandparent exist.. */
             parent->color = 1;
+            fprintf(stderr, "No grandparent... Make parent to black\n");
             return;
         }
     } else {
         /* Parent is black. No need to process */
-        
+            fprintf(stderr, "Parent is black. No need to process\n");
         return;
     }
 }
@@ -155,13 +173,13 @@ static void __rbt_insert(RbtCtx *ctx,
     depth++;
 
     if (*partial_tree == NULL) {
-        *partial_tree = node;
-        rbt_balancing(ctx, node);
-
         if (ctx->depth < depth) {
             ctx->depth = depth;
             fprintf(stderr, "Depth is now %d\n", depth);
         }
+        *partial_tree = node;
+        rbt_balancing(ctx, node);
+
         return;
     }
 
