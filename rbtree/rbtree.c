@@ -214,6 +214,43 @@ void rbt_delete(RbtCtx *ctx, RbtKey key)
     if (elem == NULL)
         return;
 
+    if (elem == ctx->root){
+        if (elem->child[0] != NULL){
+            if (elem->child[1] != NULL){
+                /* elem is root and has two child */
+
+                // TODO
+            } else {
+                /* elem is root and has only left child */
+                ctx->root = elem->child[0];
+                elem->child[0]->parent = NULL;
+
+                free(elem);
+            }  
+        } else {
+            if (elem->child[1] != NULL) {
+                /* elem is root and has only right child */
+                ctx->root = elem->child[1];
+                elem->child[1]->parent = NULL;
+
+                free(elem); 
+            } else {
+                /* elem is root and has no child */
+                ctx->root = NULL;
+                free(elem);
+            }
+        }
+    } else {
+        /* Elem is not root */
+
+    }
+
+    if (elem->color == 0){
+        /* Red node */
+    } else {
+        /* Black node */
+    }
+
     /* TODO */
 
 
