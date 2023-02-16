@@ -219,7 +219,9 @@ void rbt_delete(RbtCtx *ctx, RbtKey key)
             if (elem->child[1] != NULL){
                 /* elem is root and has two child */
 
-                // TODO
+                /* Find Successor */
+
+                /* TODO */
             } else {
                 /* elem is root and has only left child */
                 ctx->root = elem->child[0];
