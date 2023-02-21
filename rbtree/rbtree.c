@@ -224,6 +224,19 @@ void rbt_delete(RbtCtx *ctx, RbtKey key)
                 while (succ->child[0] != NULL)
                     succ = succ->child;
 
+
+                if (succ->child[1]) {
+                    succ->child[1]->parent = succ->parent;
+                    succ->parent->child[0] = succ->child[1];
+                }
+
+                succ->child[0] = elem->child[0];
+                succ->child[1] = elem->child[1];
+                succ->parent = NULL;
+                ctx->root = succ;
+
+                free(elem);
+
                 /* TODO : Make successor as root node */
             } else {
                 /* elem is root and has only left child */
