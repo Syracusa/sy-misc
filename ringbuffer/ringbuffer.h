@@ -5,11 +5,11 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#define PIUTIL_DEBUG_LOG 1
+#define RB_DEBUG_LOG 1
 #define RB_VERBOSE_LOG 0
 
 #define RB_DBG(...) \
-    do { if (PIUTIL_DEBUG_LOG) fprintf(stderr, ##__VA_ARGS__); } while (0)
+    do { if (RB_DEBUG_LOG) fprintf(stderr, ##__VA_ARGS__); } while (0)
 
 #define RB_VERBOSE(...) \
     do { if (RB_VERBOSE_LOG) fprintf(stderr, ##__VA_ARGS__); } while (0)
