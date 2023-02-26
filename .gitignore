@@ -6,6 +6,7 @@ build
 !*.c
 !*.h
 !*.ts
+!*.js
 !*.sh
 !*.py
 !*.html
