@@ -55,33 +55,60 @@ function init() {
     addMouseEventListener(mycanvas);
 }
 
-function checkNodePressed(x, y)
-{
-    let res = null;
+function checkNodePressed(x, y) {
     for (let i = 0; i < nodes.length; i++) {
-        /* TODO : check nodes */
+
+        let node = nodes[i];
+        let nodeSelXStart = node.x - node.mass / 2;
+        let nodeSelXEnd = node.x + node.mass / 2;
+        let nodeSelYStart = node.y - node.mass / 2;
+        let nodeSelYEnd = node.y + node.mass / 2;
+
+        if (x > nodeSelXStart && x < nodeSelXEnd &&
+            y > nodeSelYStart && y < nodeSelYEnd) {
+
+            console.log('Selected : ' + node.name);
+            return node;
+        }
     }
-    return res;
+    return null;
 }
 
 function addMouseEventListener(canvasElem) {
-    canvasElem.onmousedown = function(e) {
-        console.log("Mouse down pos : " + e.clientX +  ", " + e.clientY + "")
+    let nodeSel = null;
+    let relX = 0;
+    let relY = 0;
 
-        /* Check if node pos */
-        pressedNode = checkNodePressed(e.clientX, e.clientY);
-        if (pressedNode){
-            /* TODO */
+    canvasElem.onmousedown = function (e) {
+        console.log("Mouse down pos : " + e.clientX + ", " + e.clientY + "");
+
+        /* Check node pos */
+        let pressedNode = checkNodePressed(e.clientX, e.clientY);
+        if (pressedNode) {
+            nodeSel = pressedNode;
+            relX = e.clientX - nodeSel.x;
+            relY = e.clientY - nodeSel.y;
         }
     }
-    canvasElem.onmousemove = function(e) {
-        console.log("Mouse move pos : " + e.clientX +  ", " + e.clientY + "")
+
+    canvasElem.onmousemove = function (e) {
+        // console.log("Mouse move pos : " + e.clientX + ", " + e.clientY + "");
+        if (nodeSel != null) {
+            nodeSel.x = e.clientX - relX;
+            nodeSel.y = e.clientY - relY;
+        }
     }
-    canvasElem.onmouseup = function(e) {
-        console.log("Mouse up pos :  " + e.clientX +  ", " + e.clientY + "")
+    canvasElem.onmouseup = function (e) {
+        console.log("Mouse up pos :  " + e.clientX + ", " + e.clientY + "");
+        if (nodeSel != null){
+            nodeSel.x = e.clientX - relX;
+            nodeSel.y = e.clientY - relY;
+            nodeSel = null;
+        }
     }
-    canvasElem.onmouseout = function(e) {
-        console.log("Mouse out pos : " + e.clientX +  ", " + e.clientY + "")
+    canvasElem.onmouseout = function (e) {
+        console.log("Mouse out pos : " + e.clientX + ", " + e.clientY + "");
+        nodeSel = null;
     }
 }
 
