@@ -11,6 +11,10 @@ build
 !*.py
 !*.html
 !*.gitignore
+!*.css
+!*.gif
+!robots.txt
+
 
 !CMakeLists.txt
 !.editorconfig
