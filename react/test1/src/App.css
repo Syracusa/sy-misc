@@ -12,3 +12,8 @@ body {
   height: 100%;
   display: block; */
 }
+
+table, th, td {
+  border: 5px solid black;
+  border-collapse: collapse;
+}
