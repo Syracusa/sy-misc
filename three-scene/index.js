@@ -40,6 +40,10 @@ plane.receiveShadow = true;
 plane.rotation.x = -Math.PI / 2;
 scene.add(plane);
 
+// Grid helper
+const gridHelper = new THREE.GridHelper( 10, 10 );
+scene.add( gridHelper );
+
 // sphere geometry
 const geometryS = new THREE.SphereGeometry(2, 32, 32);
 const materialS = new THREE.MeshStandardMaterial({
