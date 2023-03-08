@@ -25,12 +25,14 @@ const renderer = new THREE.WebGLRenderer();
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFShadowMap;
 
-document.body.appendChild(renderer.domElement);
-renderer.setSize(window.innerWidth, window.innerHeight);
+const sceneDomParent = document.getElementById("three_scene");
+sceneDomParent.appendChild(renderer.domElement);
+// renderer.setSize(window.innerWidth, window.innerHeight - 100);
+renderer.setSize(sceneDomParent.offsetWidth, sceneDomParent.offsetHeight);
 
 // plane geometry
 const geometryP = new THREE.PlaneGeometry(100, 100);
-const materialP = new THREE.MeshStandardMaterial({ color: 0xffffff })
+const materialP = new THREE.MeshStandardMaterial({ color: 0xeeeeee })
 const plane = new THREE.Mesh(geometryP, materialP);
 
 plane.castShadow = false;
@@ -123,16 +125,16 @@ let oldTime = Date.now();
 function inputControl(timeDiff)
 {
     if (wPressed) {
-        camPos.z -= 0.00001 * timeDiff;
+        camPos.z -= 0.01 * timeDiff;
     }
     if (sPressed) {
-        camPos.z += 0.00001 * timeDiff;
+        camPos.z += 0.01 * timeDiff;
     }
     if (aPressed) {
-        camPos.x -= 0.00001 * timeDiff;
+        camPos.x -= 0.01 * timeDiff;
     }
     if (dPressed) {
-        camPos.x += 0.00001 * timeDiff;
+        camPos.x += 0.01 * timeDiff;
     }
     
 }
@@ -141,11 +143,13 @@ function inputControl(timeDiff)
 function animate() {
     requestAnimationFrame(animate);
 
-    let timeDiff = Date.now() - oldTime;
+    let currtime = Date.now();
+    let timeDiff = currtime - oldTime;
+    oldTime = currtime;
 
     inputControl(timeDiff);
-    // spherePos.x += 0.00001 * timeDiff;
-    // lightPos.x += 0.00002 * timeDiff;
+    // spherePos.x += 0.01 * timeDiff;
+    // lightPos.x += 0.02 * timeDiff;
 
     sphere.position.set(spherePos.x, spherePos.y, spherePos.z);
     light.position.set(lightPos.x, lightPos.y, lightPos.z);
