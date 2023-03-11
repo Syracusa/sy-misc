@@ -2,10 +2,10 @@ import * as THREE from 'three';
 
 export class Camera {
     constructor() {
-        this.CamPos = { x: 0, y: 20, z: 0 };
+        this.CamPos = { x: 10, y: 20, z: 10 };
         this.CamLookat = { x: 5, y: 0, z: 0 };
 
-        this.CamdirAngle = 0;
+        this.CamdirAngle = 0.3;
         this.CamdirDiameter = 5;
 
         this.ViewScale = 10;
@@ -13,6 +13,8 @@ export class Camera {
             this.ViewScale, -1 * this.ViewScale,
             -200, 1000);
         this.camera.position.set(this.CamPos.x, this.CamPos.y, this.CamPos.z);
+
+        this.UpdateLookat();
         this.camera.lookAt(this.CamLookat.x, this.CamLookat.y, this.CamLookat.z);
     }
 
