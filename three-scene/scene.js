@@ -2,6 +2,7 @@ import * as THREE from 'three';
 
 import { Terrain } from './terrain.js';
 import { Camera } from './camera.js';
+import { Controller } from './controller.js';
 
 export class MySceneContext {
     constructor() {
@@ -20,6 +21,7 @@ export class MySceneContext {
 
         this.cam = new Camera();
         this.terrain = new Terrain(this.scene);
+        this.controller = new Controller();
 
         this.lightPos = { x: 3, y: 15, z: 3 };
         this.spherePos = { x: 8, y: 8, z: 8 };
@@ -27,7 +29,43 @@ export class MySceneContext {
         this.genSphere();
     }
 
+    inputHandler(timeDiff) {
+        timeDiff *= 0.1;
+        if (this.controller.isKeyPressed('w')) {
+            this.cam.GoFront(timeDiff);
+        }
+        if (this.controller.isKeyPressed('s')) {
+            this.cam.GoBack(timeDiff);
+        }
+        if (this.controller.isKeyPressed('a')) {
+            this.cam.GoLeft(timeDiff);
+        }
+        if (this.controller.isKeyPressed('d')) {
+            this.cam.GoRight(timeDiff);
+        }
+        if (this.controller.isKeyPressed('q')) {
+            this.cam.LeftRotate(timeDiff);
+        }
+        if (this.controller.isKeyPressed('e')) {
+            this.cam.RightRotate(timeDiff);
+        }
+        if (this.controller.isKeyPressed('1')) {
+            this.cam.ViewFar(timeDiff);
+        }
+        if (this.controller.isKeyPressed('2')) {
+            this.cam.ViewNear(timeDiff);
+        }
+        if (this.controller.isKeyPressed('3')) {
+            this.cam.GetClose(0.1 * timeDiff);
+        }
+        if (this.controller.isKeyPressed('4')) {
+            this.cam.GetClose(-0.1 * timeDiff);
+        }
+    }
+
     update(timeDiff) {
+        this.inputHandler(timeDiff);
+
         this.sphere.position.set(this.spherePos.x, this.spherePos.y, this.spherePos.z);
         this.light.position.set(this.lightPos.x, this.lightPos.y, this.lightPos.z);
         this.lightSource.position.set(this.lightPos.x, this.lightPos.y, this.lightPos.z);
