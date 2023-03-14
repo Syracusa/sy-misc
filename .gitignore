@@ -17,6 +17,9 @@ node_modules
 !robots.txt
 !*.md
 
+!LICENSE
+
+!config.json
 
 !CMakeLists.txt
 !.editorconfig
