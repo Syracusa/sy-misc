@@ -24,12 +24,28 @@ static void init_mac_connection_context(SimPhyContext *spctx)
     }
 }
 
+static void send_to_remote_mac(SimPhyContext *spctx,
+                               uint8_t id,
+                               void *data, size_t len)
+{
+    /* TODO : Multicast */
+}
+
 static void recv_from_remote_mac(SimPhyContext *spctx,
                                  uint8_t id,
                                  void *data,
                                  size_t len)
 {
     /* TODO : Multicast Recv */
+}
+
+
+static void send_to_local_mac(SimPhyContext *spctx,
+                              uint8_t id,
+                              void *data,
+                              size_t len)
+{
+    /* TODO : Message queue */
 }
 
 static void recv_from_local_mac(SimPhyContext *spctx,
@@ -47,23 +63,10 @@ static void recv_from_local_mac(SimPhyContext *spctx,
     }
 }
 
-static void send_to_remote_mac(SimPhyContext *spctx,
-                               uint8_t id,
-                               void *data, size_t len)
-{
-    /* TODO : Multicast */
-}
-
-static void send_to_local_mac(SimPhyContext *spctx,
-                              uint8_t id,
-                              void *data,
-                              size_t len)
-{
-    /* TODO : Message queue */
-}
 
 int main()
 {
+    printf("SIMNET STARTED\n");
     SimPhyContext spctx;
 
     /* TODO : Read config from file */
