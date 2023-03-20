@@ -13,6 +13,7 @@ class Node {
         this.mass = 20;
         this.vx = 0;
         this.vy = 0;
+        this.pressed = false;
     }
 }
 
@@ -21,6 +22,12 @@ class Link {
         this.n1 = n1;
         this.n2 = n2;
         this.r = r;
+    }
+}
+
+class Scene {
+    constructor() {
+
     }
 }
 
@@ -59,10 +66,10 @@ function checkNodePressed(x, y) {
     for (let i = 0; i < nodes.length; i++) {
 
         let node = nodes[i];
-        let nodeSelXStart = node.x - node.mass / 2;
-        let nodeSelXEnd = node.x + node.mass / 2;
-        let nodeSelYStart = node.y - node.mass / 2;
-        let nodeSelYEnd = node.y + node.mass / 2;
+        let nodeSelXStart = node.x - node.mass;
+        let nodeSelXEnd = node.x + node.mass;
+        let nodeSelYStart = node.y - node.mass;
+        let nodeSelYEnd = node.y + node.mass;
 
         if (x > nodeSelXStart && x < nodeSelXEnd &&
             y > nodeSelYStart && y < nodeSelYEnd) {
@@ -86,8 +93,13 @@ function addMouseEventListener(canvasElem) {
         let pressedNode = checkNodePressed(e.clientX, e.clientY);
         if (pressedNode) {
             nodeSel = pressedNode;
+            nodeSel.pressed = true;
             relX = e.clientX - nodeSel.x;
             relY = e.clientY - nodeSel.y;
+            nodeSel.x = e.clientX - relX;
+            nodeSel.y = e.clientY - relY;
+        } else {
+            /* Drag start */
         }
     }
 
@@ -101,6 +113,7 @@ function addMouseEventListener(canvasElem) {
     canvasElem.onmouseup = function (e) {
         console.log("Mouse up pos :  " + e.clientX + ", " + e.clientY + "");
         if (nodeSel != null){
+            nodeSel.pressed = false;
             nodeSel.x = e.clientX - relX;
             nodeSel.y = e.clientY - relY;
             nodeSel = null;
@@ -157,7 +170,13 @@ function draw_nodes(ctx, nodes) {
 
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.mass, 0, 2 * Math.PI);
-        ctx.fillStyle = 'green';
+
+        if (node.pressed == true){
+            ctx.fillStyle = 'red';
+        } else {
+            ctx.fillStyle = 'green';
+        }
+
         ctx.fill();
         ctx.strokeStyle = '#000000';
         ctx.lineWidth = 3;
